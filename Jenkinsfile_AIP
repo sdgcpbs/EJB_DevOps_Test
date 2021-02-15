@@ -113,7 +113,7 @@ spec:
 			}
 		}
 		stage("Deploy") {
-			when { expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }}
+			when { expression {env.GIT_BRANCH == 'dev' || env.GIT_BRANCH == 'release'|| propfile['feature_deploy'] == "true" }}
 			steps {
 				container('gradle') {
 					script {
@@ -130,6 +130,7 @@ spec:
 									USERNAME=env.USERNAME_RELEASE_DEPLOY
 									HOSTS=env.HOSTS_RELEASE_DEPLOY
 								}
+								echo $HOSTS
 								HOSTS.tokenize(',').each { HOSTNAME ->
 									echo 'I am deploying the artifact into the target environment ${HOSTNAME} as user ${USERNAME}'
 									echo 'Replace all the lines below for EJB and add the parameters to propfile and make refrences below'
