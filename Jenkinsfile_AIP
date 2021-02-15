@@ -130,6 +130,7 @@ spec:
 									USERNAME=env.USERNAME_RELEASE_DEPLOY
 									HOSTS=env.HOSTS_RELEASE_DEPLOY
 								}
+								echo $HOSTS
 								HOSTS.tokenize(',').each { HOSTNAME ->
 									echo 'I am deploying the artifact into the target environment ${HOSTNAME} as user ${USERNAME}'
 									echo 'Replace all the lines below for EJB and add the parameters to propfile and make refrences below'
