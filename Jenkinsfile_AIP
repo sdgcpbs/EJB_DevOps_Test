@@ -70,6 +70,7 @@ spec:
 			}
 		}
 		stage('Code Quality') {
+			when { expression {propfile['code_quality'] == "true" }}
 			steps {
 				container('gradle') {
 					withMaven(maven: 'MAVEN-3.6.3') {
