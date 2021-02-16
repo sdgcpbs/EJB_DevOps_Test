@@ -10,12 +10,14 @@
 	</parent>
 	<groupId>io.buildpacks.example</groupId>
 	<artifactId>sample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>EJB_build-${BUILD_NUMBER}_branch-${env.GIT_BRANCH}</version>
 	<name>sample</name>
 	<description>Sample Java Application</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<git.branchName>${env.GIT_BRANCH}</git.branchName>
+		<jenkins.buildNumber>${BUILD_NUMBER}</jenkins.buildNumber>
 	</properties>
 
 	<dependencies>
