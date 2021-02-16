@@ -99,7 +99,7 @@ spec:
 								echo 'Use the 5 lines below when we switch to the actual EJB repo' 
 								/* echo 'copying the jar and war files from the individual target directories and copying it to artifacts directory '
 								sh "mkdir -p $WORKSPACE/artifacts"
-								sh 'cp /dist/libs/* $WORKSPACE/artifacts/' 
+								sh "cp /dist/libs/* $WORKSPACE/artifacts/" 
 								echo 'create a tar file on the Jenkins server'
 								sh "cd $WORKSPACE/artifacts/ && tar -cvzf artifact.tar * && md5sum artifact.tar archiveArtifacts artifacts: 'artifacts/*.tar', fingerprint: true 
 								*/
