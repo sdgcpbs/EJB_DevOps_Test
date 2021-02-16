@@ -10,13 +10,12 @@
 	</parent>
 	<groupId>io.buildpacks.example</groupId>
 	<artifactId>sample</artifactId>
-	<version>0.0.2-${git.branchName}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>sample</name>
 	<description>Sample Java Application</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<git.branchName>${env.GIT_BRANCH}</git.branchName>
 	</properties>
 
 	<dependencies>
