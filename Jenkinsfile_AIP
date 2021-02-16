@@ -78,7 +78,7 @@ spec:
 							echo "Change the line below when we switch to the actual EJB repo"
 							// sh 'gradle SonarQube'
 							echo 'Remove the line below when we switch to the actual EJB repo'
-							sh 'mvn -f sample-java-app/pom.xml -Dsonar.projectName=EJB_${BRANCH_NAME} -Dsonar.projectKey=EJB_sample sonar:sonar'
+							sh "mvn -f sample-java-app/pom.xml -Dsonar.projectName=EJB_${env.GIT_BRANCH} -Dsonar.projectKey=EJB_sample sonar:sonar"
 						}
 						sleep(60)
 						timeout(time: 1, unit: 'MINUTES') {
@@ -89,7 +89,7 @@ spec:
 			}
 		}
 		stage("Publish Package") {
-			when { expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }}
+			when { expression {env.GIT_BRANCH == 'dev' || env.GIT_BRANCH == 'release'|| propfile['feature_deploy'] == "true" }}
 			steps {
 				container('gradle') {
 					script {
@@ -99,21 +99,21 @@ spec:
 								echo 'Use the 5 lines below when we switch to the actual EJB repo' 
 								/* echo 'copying the jar and war files from the individual target directories and copying it to artifacts directory '
 								sh "mkdir -p $WORKSPACE/artifacts"
-								sh 'cp /dist/libs/* $WORKSPACE/artifacts/' 
+								sh "cp /dist/libs/* $WORKSPACE/artifacts/" 
 								echo 'create a tar file on the Jenkins server'
 								sh "cd $WORKSPACE/artifacts/ && tar -cvzf artifact.tar * && md5sum artifact.tar archiveArtifacts artifacts: 'artifacts/*.tar', fingerprint: true 
 								*/
 								echo 'Remove the 3 lines below when we switch to the actual EJB repo'
-								sh 'mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar'
+								sh "mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${env.GIT_BRANCH}.jar"
 								sh 'ls -lrt sample-java-app/target/'
-								sh 'mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/'
+								sh "mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${env.GIT_BRANCH}.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
 							}
 					}
 				}
 			}
 		}
 		stage("Deploy") {
-			when { expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }}
+			when { expression {env.GIT_BRANCH == 'dev' || env.GIT_BRANCH == 'release'|| propfile['feature_deploy'] == "true" }}
 			steps {
 				container('gradle') {
 					script {
@@ -122,15 +122,15 @@ spec:
 									USERNAME=env.USERNAME_FEATURE_DEPLOY
 									HOSTS=env.HOSTS_FEATURE_DEPLOY
 								}
-								if (env.BRANCH_NAME == 'dev' ) {
+								if (env.GIT_BRANCH == 'dev' ) {
 									USERNAME=env.USERNAME_DEV_DEPLOY
 									HOSTS=env.HOSTS_DEV_DEPLOY
 								}
-								if (env.BRANCH_NAME == 'release') {
+								if (env.GIT_BRANCH == 'release') {
 									USERNAME=env.USERNAME_RELEASE_DEPLOY
 									HOSTS=env.HOSTS_RELEASE_DEPLOY
 								}
-								echo $HOSTS
+								echo HOSTS
 								HOSTS.tokenize(',').each { HOSTNAME ->
 									echo 'I am deploying the artifact into the target environment ${HOSTNAME} as user ${USERNAME}'
 									echo 'Replace all the lines below for EJB and add the parameters to propfile and make refrences below'
@@ -160,7 +160,7 @@ spec:
 			}
 		}
 		stage('Post Deploy Tests') {
-			when { expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }}
+			when { expression {env.GIT_BRANCH == 'dev' || env.GIT_BRANCH == 'release'|| propfile['feature_deploy'] == "true" }}
 			parallel {
 				stage('Smoke Test') {
 					steps {
