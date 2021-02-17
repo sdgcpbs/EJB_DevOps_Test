@@ -40,6 +40,7 @@ spec:
 		HOSTS_DEV_DEPLOY="10.6.74.91, 10.6.74.92"
 		USERNAME_RELEASE='wasadmin'
 		HOSTS_RELEASE_DEPLOY="10.6.74.93, 10.6.74.94"
+		ARTIFACT="EJB-build-${env.BUILD_NUMBER}-branch-${env.GIT_BRANCH}"
 	}
 	stages {
 		stage('Build & Unit Test') {
@@ -94,25 +95,25 @@ spec:
 			steps {
 				container('gradle') {
 					script {
-							withMaven(maven: 'MAVEN-3.6.3') {
-								echo 'I am pushing the artifact with unique name showing the branch from which it is generated, to Archiva'
-								echo 'Replace the next 4 lines to reflect the EJB artifact and push it to archiva'
-								echo 'Use the 5 lines below when we switch to the actual EJB repo' 
-								/* echo 'copying the jar and war files from the individual target directories and copying it to artifacts directory '
-								sh "mkdir -p $WORKSPACE/artifacts"
-								sh "cp /dist/libs/* $WORKSPACE/artifacts/" 
-								echo 'create a tar file on the Jenkins server'
-								sh "cd $WORKSPACE/artifacts/ && tar -cvzf artifact.tar * && md5sum artifact.tar archiveArtifacts artifacts: 'artifacts/*.tar', fingerprint: true 
-								*/
-								echo 'Remove the 3 lines below when we switch to the actual EJB repo'
-								// sh "mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/EJB_build-${BUILD_NUMBER}_branch-${env.GIT_BRANCH}.jar"
-								sh 'ls -lrt sample-java-app/target/'
-								ARTIFACT="EJB-build-${env.BUILD_NUMBER}-branch-${env.GIT_BRANCH}"
-								dir("sample-java-app/target") {
-									sh "mvn -X deploy:deploy-file  -Dfile=$ARTIFACT.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
-								}
-								//sh "mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-EJB-build-branch.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
+						withMaven(maven: 'MAVEN-3.6.3') {
+							echo 'I am pushing the artifact with unique name showing the branch from which it is generated, to Archiva'
+							echo 'Replace the next 4 lines to reflect the EJB artifact and push it to archiva'
+							echo 'Use the 5 lines below when we switch to the actual EJB repo' 
+							/* echo 'copying the jar and war files from the individual target directories and copying it to artifacts directory '
+							sh "mkdir -p $WORKSPACE/artifacts"
+							sh "cp /dist/libs/* $WORKSPACE/artifacts/" 
+							echo 'create a tar file on the Jenkins server'
+							sh "cd $WORKSPACE/artifacts/ && tar -cvzf artifact.tar * && md5sum artifact.tar archiveArtifacts artifacts: 'artifacts/*.tar', fingerprint: true 
+							*/
+							echo 'Remove the 3 lines below when we switch to the actual EJB repo'
+							// sh "mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/EJB_build-${BUILD_NUMBER}_branch-${env.GIT_BRANCH}.jar"
+							sh 'ls -lrt sample-java-app/target/'
+
+							dir("sample-java-app/target") {
+								sh "mvn -X deploy:deploy-file  -Dfile=env.ARTIFACT.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
 							}
+							//sh "mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-EJB-build-branch.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
+						}
 					}
 				}
 			}
