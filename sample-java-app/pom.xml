@@ -65,63 +65,88 @@
 			</plugin>
 
 			<plugin>
-			  <groupId>org.jacoco</groupId>
-			  <artifactId>jacoco-maven-plugin</artifactId>
-			  <version>0.8.3</version>
-			  <executions>
-			    <execution>
-			      <id>jacoco-initialize</id>
-			      <goals>
-				<goal>prepare-agent</goal>
-			      </goals>
-			    </execution>
-			    <execution>
-			      <id>jacoco-report</id>
-			      <phase>test</phase>
-			      <goals>
-				<goal>report</goal>
-			      </goals>
-			    </execution>
-			    <!-- Threshold -->
-			    <execution>
-			      <id>coverage-check</id>
-			      <goals>
-				<goal>check</goal>
-			      </goals>
-			      <configuration>
-			      <outputDirectory>target/jacoco-report</outputDirectory>
-				  <dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
-				<rules>
-				  <rule>
-				    <element>CLASS</element>
-				    <excludes>
-				      <exclude>com.asimio.demo.Application</exclude>
-				    </excludes>
-				    <limits>
-				      <limit>
-					<counter>LINE</counter>
-					<value>COVEREDRATIO</value>
-					<minimum>80%</minimum>
-				      </limit>
-				    </limits>
-				  </rule>
-				</rules>
-			      </configuration>
-			    </execution>
-			  </executions>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+						<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<!-- Threshold -->
+					<execution>
+						<id>coverage-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/jacoco-report</outputDirectory>
+							<dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
+							<rules>
+								<rule>
+									<element>CLASS</element>
+									<excludes>
+										<exclude>com.asimio.demo.Application</exclude>
+									</excludes>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>80%</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-			
 		</plugins>
+		
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-http</artifactId>
 				<version>2.5</version>
 			</extension>
-		</extensions>
-			
+		</extensions>	
 	</build>
 			
+	<repositories>
+		<repository>
+			<id>internal</id>
+			<name>Archiva Managed Internal Repository</name>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		
+		<repository>
+			<id>snapshots</id>
+			<name>Archiva Managed Snapshot Repository</name>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
 	<pluginRepositories>
     		<pluginRepository>
       			<id>snapshots</id>
@@ -134,6 +159,18 @@
         			<enabled>true</enabled>
       			</snapshots>
     		</pluginRepository>
+		
+		<pluginRepository>
+      			<id>internal</id>
+			<name>Archiva Managed Internal Repository</name>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
   	</pluginRepositories>
-
+	
 </project>
