@@ -110,7 +110,7 @@ spec:
 							sh 'ls -lrt sample-java-app/'
 							sh 'ls -lrt sample-java-app/target/'
 							dir("sample-java-app/target") {
-								sh "mvn -X deploy:deploy-file  -Dfile=sample-${ARTIFACT}.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
+								sh "mvn -X deploy:deploy-file  -Dfile=sample-${ARTIFACT}.jar -DpomFile=$WORKSPACE/sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
 							}
 							//sh "mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-EJB-build-branch.jar -DpomFile=$WORKSPACE/sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
 						}
