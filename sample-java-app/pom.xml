@@ -42,13 +42,13 @@
     		<repository>
       			<id>internal</id>
       			<name>Archiva Managed Internal Repository</name>
-      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/internal/</url>
+      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/internal</url>
     		</repository>
 		
     		<snapshotRepository>
       			<id>snapshots</id>
       			<name>Archiva Managed Snapshot Repository</name>
-      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/</url>
+      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots</url>
     		</snapshotRepository>
  	</distributionManagement>
 	
@@ -111,6 +111,32 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		
 		<extensions>
@@ -126,7 +152,7 @@
 		<repository>
 			<id>internal</id>
 			<name>Archiva Managed Internal Repository</name>
-			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal/</url>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -138,7 +164,7 @@
 		<repository>
 			<id>snapshots</id>
 			<name>Archiva Managed Snapshot Repository</name>
-			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/</url>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/snapshots</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -152,7 +178,7 @@
     		<pluginRepository>
       			<id>snapshots</id>
       			<name>Archiva Managed Snapshot Repository</name>
-      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/</url>
+      			<url>https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots</url>
       			<releases>
         			<enabled>false</enabled>
       			</releases>
@@ -164,7 +190,7 @@
 		<pluginRepository>
       			<id>internal</id>
 			<name>Archiva Managed Internal Repository</name>
-			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal/</url>
+			<url>http://archiva.sgn.devops.accentureanalytics.com/repository/internal</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
