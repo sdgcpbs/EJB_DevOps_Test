@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.buildpacks.example</groupId>
 	<artifactId>sample</artifactId>
-	<version>${revision}</version>
+	<version>${myrevision}</version>
 	<!-- <version>EJB-build-${BUILD_NUMBER}-branch-${env.GIT_BRANCH}</version> -->
 	<name>CI-Test</name>
 	<description>Sample Java Application</description>
@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<revision>1.0.0</revision>
+		<myrevision>1.0.1</myrevision>
 	</properties>
 
 	<dependencies>
