@@ -40,7 +40,7 @@ spec:
 		HOSTS_DEV_DEPLOY="10.6.74.91, 10.6.74.92"
 		USERNAME_RELEASE='wasadmin'
 		HOSTS_RELEASE_DEPLOY="10.6.74.93, 10.6.74.94"
-		ARTIFACT="EJB-branch-${env.GIT_BRANCH}-build-${env.BUILD_NUMBER}-SNAPSHOT"
+		ARTIFACT="${env.BUILD_NUMBER}-SNAPSHOT"
 	}
 	stages {
 		stage('Build & Unit Test') {
