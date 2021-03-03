@@ -109,7 +109,7 @@ spec:
 							echo 'Remove the 3 lines below when we switch to the actual EJB repo'
 							// sh "mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/EJB_build-${BUILD_NUMBER}_branch-${env.GIT_BRANCH}.jar"
 							sh 'ls -lrt sample-java-app/target/'
-							sh "mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-2.3.4-SNAPSHOT  -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
+							sh "mvn -X deploy:deploy-file  -Dfile=$WORKSPACE/sample-java-app/target/sample-2.3.4-SNAPSHOT.jar  -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/"
 						}
 					}
 				}
