@@ -54,7 +54,7 @@ spec:
 							//sh 'gradle --no-daemon clean build'
 							echo 'Add gradle clean and build for EJB and comment this step' 
 							//sh "mvn -Drevision=2.3.4-SNAPSHOT -f sample-java-app/pom.xml clean package"
-							sh "mvn -Drevision="${env.GIT_BRANCH}-build-${env.BUILD_NUMBER}-SNAPSHOT" -f sample-java-app/pom.xml clean package"
+							sh 'mvn -Drevision="${env.GIT_BRANCH}-build-${env.BUILD_NUMBER}-SNAPSHOT" -f sample-java-app/pom.xml clean package'
 							propfile = readProperties(file: './project.properties')
 							if (propfile['javadoc'] == "true") {
 								sh 'mvn javadoc:aggregate'
